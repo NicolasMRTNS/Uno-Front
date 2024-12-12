@@ -1,0 +1,12 @@
+$primary-color: #333;
+$secondary-color: #555;
+$color: #fff;
+
+body {
+  background-color: $primary-color;
+  color: $color;
+}
+
+.v-field__input {
+  background-color: $secondary-color !important;
+}
