@@ -3,10 +3,23 @@ $secondary-color: #555;
 $color: #fff;
 
 body {
+  font-family: Arial, Helvetica, sans-serif;
   background-color: $primary-color;
   color: $color;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .v-field__input {
   background-color: $secondary-color !important;
+}
+
+.v-btn {
+  cursor: pointer;
+}
+
+.justify-center {
+  justify-content: center;
 }
