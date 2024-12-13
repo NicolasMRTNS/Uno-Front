@@ -1,0 +1,17 @@
+export enum CardValueEnum {
+  Zero,
+  One,
+  Two,
+  Three,
+  Four,
+  Five,
+  Six,
+  Seven,
+  Eight,
+  Nine,
+  Skip,
+  Reverse,
+  DrawTwo,
+  WildCard,
+  WildDrawFour,
+}

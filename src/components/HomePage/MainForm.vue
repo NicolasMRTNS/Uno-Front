@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useGameStore } from '@/stores/game'
 import { computed, ref } from 'vue'
 import { VForm } from 'vuetify/components'
+
+const { createGame } = useGameStore()
 
 const form = ref<VForm | undefined>(undefined)
 const username = ref<string | undefined>(undefined)
@@ -23,8 +26,9 @@ const disableJoinGameBtn = computed<boolean>(() => {
 })
 
 const createNewGame = () => {
-  console.log(username.value)
-  console.log(gameId.value)
+  if (username.value) {
+    createGame(username.value)
+  }
 }
 
 const joinGame = () => {
