@@ -1,6 +1,6 @@
 export enum GameStateEnum {
-  WaitingForPlayers,
-  InProgress,
-  Completed,
-  Cancelled,
+  WaitingForPlayers = 'waiting_for_players',
+  InProgress = 'in_progress',
+  Completed = 'completed',
+  Cancelled = 'cancelled',
 }
