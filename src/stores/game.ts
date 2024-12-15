@@ -1,9 +1,10 @@
 import { useErrorHandler } from '@/composables/errorHandler'
+import { useWebSocketHandler } from '@/composables/webSocketHandler'
 import { WAITING_ROOM_ROUTER_URL } from '@/constants/RouterConstants'
 import type { Game } from '@/models/Game'
 import type { Player } from '@/models/Player'
-import { getCreateGameUrl, getJoinGameUrl } from '@/utils/UrlUtils'
-import axios, { type AxiosResponse } from 'axios'
+import { getCreateGameUrl } from '@/utils/UrlUtils'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -12,9 +13,13 @@ import { usePlayerStore } from './player'
 export const useGameStore = defineStore('game', () => {
   const { handleError } = useErrorHandler()
   const { setPlayer } = usePlayerStore()
+  const { connect } = useWebSocketHandler()
   const router = useRouter()
 
   const game = ref<Game | undefined>(undefined)
+  const setGame = (gameUpdated: Game | undefined): void => {
+    game.value = gameUpdated
+  }
 
   const findPlayer = (username: string): Player | undefined => {
     if (game.value) {
@@ -23,8 +28,7 @@ export const useGameStore = defineStore('game', () => {
     return undefined
   }
 
-  const setGameAndPlayer = (response: AxiosResponse, username: string): void => {
-    game.value = response.data
+  const setCurrentPlayer = (username: string): void => {
     const currentPlayer = findPlayer(username)
     if (currentPlayer) {
       setPlayer(currentPlayer)
@@ -36,23 +40,18 @@ export const useGameStore = defineStore('game', () => {
     await axios
       .post(getCreateGameUrl(username))
       .then((response) => {
-        setGameAndPlayer(response, username)
+        const game: Game = response.data
+        joinGame(username, game.id)
       })
       .catch((error) => {
         handleError(error)
       })
   }
 
-  const joinGame = async (username: string, gameId: string): Promise<void> => {
-    await axios
-      .post(getJoinGameUrl(username, gameId))
-      .then((response) => {
-        setGameAndPlayer(response, username)
-      })
-      .catch((error) => {
-        handleError(error)
-      })
+  const joinGame = (username: string, gameId: string): void => {
+    connect(username, gameId)
+    setCurrentPlayer(username)
   }
 
-  return { game, createGame, joinGame }
+  return { game, setGame, createGame, joinGame }
 })

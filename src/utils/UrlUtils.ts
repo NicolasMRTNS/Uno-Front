@@ -11,3 +11,6 @@ export const getJoinGameUrl = (username: string, gameId: string): string =>
 
 // WebSocket
 export const getMainWebSocketUrl = (): string => import.meta.env.VITE_WEBSOCKET_BASE_URL
+
+export const getConnectionWebSocketUrl = (username: string, gameId: string): string =>
+  getMainWebSocketUrl() + `/${gameId}/${username}`
