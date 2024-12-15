@@ -1,16 +1,22 @@
+import {
+  HOME_ROUTER_NAME,
+  HOME_ROUTER_URL,
+  WAITING_ROOM_ROUTER_NAME,
+  WAITING_ROOM_ROUTER_URL,
+} from '@/constants/RouterConstants'
 import WaitingRoom from '@/views/WaitingRoom.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: HOME_ROUTER_URL,
+    name: HOME_ROUTER_NAME,
     component: HomePage,
   },
   {
-    path: '/waiting-room',
-    name: 'waiting room',
+    path: WAITING_ROOM_ROUTER_URL,
+    name: WAITING_ROOM_ROUTER_NAME,
     component: WaitingRoom,
   },
   // {

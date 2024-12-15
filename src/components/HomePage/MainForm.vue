@@ -3,7 +3,7 @@ import { useGameStore } from '@/stores/game'
 import { computed, ref } from 'vue'
 import { VForm } from 'vuetify/components'
 
-const { createGame } = useGameStore()
+const { createGame, joinGame } = useGameStore()
 
 const form = ref<VForm | undefined>(undefined)
 const username = ref<string | undefined>(undefined)
@@ -25,15 +25,16 @@ const disableJoinGameBtn = computed<boolean>(() => {
   return isUsernameEmpty.value || isGameIdEmpty.value
 })
 
-const createNewGame = () => {
+const createNewGameBtn = (): void => {
   if (username.value) {
     createGame(username.value)
   }
 }
 
-const joinGame = () => {
-  console.log(username.value)
-  console.log(gameId.value)
+const joinGameBtn = (): void => {
+  if (username.value && gameId.value) {
+    joinGame(username.value, gameId.value)
+  }
 }
 </script>
 
@@ -51,12 +52,12 @@ const joinGame = () => {
         />
       </v-col>
       <v-col cols="12" sm="8" md="6">
-        <v-btn color="primary" @click="createNewGame" :disabled="disableCreateNewGameBtn" block>
+        <v-btn color="primary" @click="createNewGameBtn" :disabled="disableCreateNewGameBtn" block>
           Create new game
         </v-btn>
       </v-col>
       <v-col cols="12" sm="8" md="6">
-        <v-btn color="primary" @click="joinGame" :disabled="disableJoinGameBtn" block>
+        <v-btn color="primary" @click="joinGameBtn" :disabled="disableJoinGameBtn" block>
           Join game
         </v-btn>
       </v-col>

@@ -13,6 +13,8 @@ const { player } = usePlayerStore()
     <p>
       To invite friends, share the following game ID: <strong>{{ game.id }}</strong>
     </p>
+    <p>Number of players in the game: {{ game.players.length }}</p>
+    <p>Leader: {{ game.activePlayer.name }}</p>
 
     <template v-if="game.players.length >= 2 && game.activePlayer.id === player.id">
       <v-btn>Start the game</v-btn>
